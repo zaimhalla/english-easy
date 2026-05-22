@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hala – Talk Easy English</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d10;
+      --surface: #16161c;
+      --border: #2a2a35;
+      --accent: #c8a96e;
+      --accent2: #7c6fe0;
+      --text: #f0ede8;
+      --muted: #7a7888;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(124,111,224,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 90%, rgba(200,169,110,0.10) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    /* Avatar */
+    .avatar-wrap {
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 1.4rem;
+      position: relative;
+    }
+    .avatar-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent));
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .avatar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--bg);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Fallback if image not loaded yet */
+    .avatar-fallback {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+
+    .handle {
+      font-size: 0.82rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+
+    .bio {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    .links { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1rem 1.3rem;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+    }
+
+    .link-btn.telegram  { --clr: #29b6f6; }
+    .link-btn.readlang  { --clr: #c8a96e; }
+    .link-btn.grammar   { --clr: #7c6fe0; }
+
+    .link-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--clr);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 0 1px var(--clr);
+    }
+
+    .icon-wrap {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: color-mix(in srgb, var(--clr) 14%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.3rem;
+    }
+
+    .link-text { flex: 1; text-align: left; }
+    .link-label { display: block; font-size: 0.78rem; color: var(--muted); font-weight: 300; }
+
+    .arrow {
+      color: var(--muted);
+      font-size: 1rem;
+      transition: transform 0.18s ease, color 0.18s ease;
+    }
+    .link-btn:hover .arrow { transform: translateX(4px); color: var(--clr); }
+
+    .footer {
+      margin-top: 2.4rem;
+      font-size: 0.75rem;
+      color: var(--border);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Staggered entrance */
+    .link-btn:nth-child(1) { animation: fadeUp 0.6s 0.1s ease both; }
+    .link-btn:nth-child(2) { animation: fadeUp 0.6s 0.2s ease both; }
+    .link-btn:nth-child(3) { animation: fadeUp 0.6s 0.3s ease both; }
+    .link-btn:nth-child(4) { animation: fadeUp 0.6s 0.4s ease both; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="avatar-wrap">
+      <div class="avatar">
+        <img src="talk easy english pic.png" alt="Hely" onerror="this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👩‍🏫</div>'"/>
+      </div>
+    </div>
+
+    <h1>Hely</h1>
+    <p class="handle">Talk Easy English</p>
+    <p class="bio">Learning · Reading · Growing</p>
+    <div class="divider"></div>
+
+    <div class="links">
+
+      <!-- Telegram -->
+      <a class="link-btn telegram" href="https://t.me/talkenglisheasy?fbclid=IwY2xjawR9Q-JleHRuA2FlbQIxMQBzcnRjBmFwcF9pZAEwAAEeAW5WKpQKMisBZ4-lz0BGuYOt6woAn-FkCIaiUFM-HC-i8zotlQXbzJDUmMA_aem_2FCDZwpdOeqGQXItaNpypA" target="_blank" rel="noopener">
+        <div class="icon-wrap">✈️</div>
+        <div class="link-text">
+          <span>Telegram</span>
+          <span class="link-label">Join Our English Space
+</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- Readlang -->
+      <a class="link-btn readlang" href="https://readlang.com/" target="_blank" rel="noopener">
+        <div class="icon-wrap">📖</div>
+        <div class="link-text">
+          <span>Readlang</span>
+          <span class="link-label">Translate words while reading
+</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- Grammar Book -->
+      <a class="link-btn grammar" href="https://www.elllo.org/book/index.html" target="_blank" rel="noopener">
+        <div class="icon-wrap">📚</div>
+        <div class="link-text">
+          <span>Grammar Book</span>
+          <span class="link-label">Learn English through listening</span>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+    </div>
+
+    <p class="footer">✦ Hala · talk easy english ✦</p>
+  </div>
+</body>
+</html>
