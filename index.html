@@ -4,97 +4,272 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hely – Talk Easy English</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#0d0d10;--surface:#16161c;--border:#2a2a35;
-      --accent:#c8a96e;--accent2:#7c6fe0;--text:#f0ede8;--muted:#7a7888;
-      --green:#4caf7d;--red:#e05c5c;
+      --bg:#fff8f9;
+      --surface:#ffffff;
+      --border:#f2dde2;
+      --accent:#d4607a;
+      --accent2:#e8a0b0;
+      --text:#3d2a30;
+      --muted:#b08a92;
+      --soft:#fdeef1;
+      --pink2:#f9d0d8;
     }
-    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;
-      min-height:100vh;display:flex;align-items:center;justify-content:center;
-      padding:2rem 1rem;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;background:
-      radial-gradient(ellipse 80% 60% at 20% 10%,rgba(124,111,224,.12) 0%,transparent 60%),
-      radial-gradient(ellipse 60% 50% at 80% 90%,rgba(200,169,110,.10) 0%,transparent 55%);
-      pointer-events:none;z-index:0}
-    .card{position:relative;z-index:1;width:100%;max-width:430px;text-align:center;animation:fadeUp .6s ease both}
-    /* Avatar */
-    .avatar-wrap{width:92px;height:92px;margin:0 auto 1.4rem;position:relative}
-    .avatar-wrap::before{content:'';position:absolute;inset:-3px;border-radius:50%;
-      background:conic-gradient(var(--accent),var(--accent2),var(--accent));animation:spin 6s linear infinite}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .avatar{position:relative;width:100%;height:100%;border-radius:50%;background:var(--surface);
-      border:3px solid var(--bg);overflow:hidden;z-index:1}
-    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-    .avatar-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.2rem}
-    h1{font-family:'Playfair Display',serif;font-size:1.75rem;letter-spacing:-.01em;margin-bottom:.3rem}
-    .handle{font-size:.82rem;color:var(--accent);letter-spacing:.05em;text-transform:uppercase;font-weight:500;margin-bottom:.4rem}
-    .bio{font-size:.88rem;color:var(--muted);font-weight:300;letter-spacing:.03em;margin-bottom:2rem}
-    .divider{width:40px;height:2px;background:linear-gradient(90deg,var(--accent2),var(--accent));margin:0 auto 2rem;border-radius:2px}
-    /* Links */
-    .links{display:flex;flex-direction:column;gap:.9rem}
-    .link-btn{display:flex;align-items:center;gap:1rem;background:var(--surface);border:1px solid var(--border);
-      border-radius:14px;padding:1rem 1.3rem;text-decoration:none;color:var(--text);font-size:.95rem;
-      font-weight:500;letter-spacing:.01em;transition:transform .18s,border-color .18s,box-shadow .18s}
-    .link-btn.telegram{--clr:#29b6f6}.link-btn.readlang{--clr:#c8a96e}.link-btn.grammar{--clr:#7c6fe0}.link-btn.reactor{--clr:#e05c9a}
-    .link-btn:hover{transform:translateY(-3px);border-color:var(--clr);box-shadow:0 8px 30px rgba(0,0,0,.4),0 0 0 1px var(--clr)}
-    .icon-wrap{width:42px;height:42px;border-radius:10px;background:color-mix(in srgb,var(--clr) 14%,transparent);
-      display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem}
-    .link-text{flex:1;text-align:left}
-    .link-label{display:block;font-size:.78rem;color:var(--muted);font-weight:300}
-    .arrow{color:var(--muted);font-size:1rem;transition:transform .18s,color .18s}
-    .link-btn:hover .arrow{transform:translateX(4px);color:var(--clr)}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'DM Sans',sans-serif;
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      padding:2.5rem 1rem;
+      overflow-x:hidden;
+    }
+    /* soft blobs */
+    body::before{
+      content:'';position:fixed;inset:0;
+      background:
+        radial-gradient(ellipse 60% 45% at 5% 5%,rgba(244,167,185,.3) 0%,transparent 55%),
+        radial-gradient(ellipse 50% 40% at 95% 95%,rgba(212,96,122,.18) 0%,transparent 55%),
+        radial-gradient(ellipse 40% 30% at 80% 10%,rgba(249,208,216,.4) 0%,transparent 50%);
+      pointer-events:none;z-index:0;
+    }
 
-    /* Footer & animations */
-    .footer{margin-top:2.4rem;font-size:.75rem;color:var(--border);letter-spacing:.06em;text-transform:uppercase}
-    .link-btn:nth-child(1){animation:fadeUp .6s .1s ease both}
-    .link-btn:nth-child(2){animation:fadeUp .6s .2s ease both}
-    .link-btn:nth-child(3){animation:fadeUp .6s .3s ease both}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-    .pop{animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
-    @keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+    .card{position:relative;z-index:1;width:100%;max-width:400px;text-align:center}
+
+    /* ── Avatar ── */
+    .avatar-wrap{width:100px;height:100px;margin:0 auto 1rem;position:relative}
+    .avatar-ring{
+      position:absolute;inset:-4px;border-radius:50%;
+      background:linear-gradient(135deg,#f9a8c0,#d4607a,#f9d0d8,#e8a0b0);
+      animation:spin 5s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .avatar{
+      position:relative;width:100%;height:100%;border-radius:50%;
+      background:var(--soft);border:3px solid var(--bg);overflow:hidden;z-index:1;
+    }
+    .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+    .avatar-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2rem}
+
+    /* ── Header text ── */
+    .name{
+      font-family:'Playfair Display',serif;font-size:1.7rem;
+      color:var(--accent);margin-bottom:.15rem;
+    }
+    .handle{
+      font-size:.75rem;color:var(--accent2);letter-spacing:.13em;
+      text-transform:uppercase;font-weight:500;margin-bottom:.9rem;
+    }
+
+    /* ── Intro card ── */
+    .intro-card{
+      background:var(--surface);border:1.5px solid var(--border);
+      border-radius:18px;padding:1rem 1.2rem;margin-bottom:1.6rem;
+      box-shadow:0 4px 16px rgba(212,96,122,.07);
+    }
+    .intro-card p{
+      font-size:.85rem;color:var(--muted);line-height:1.7;font-weight:300;
+    }
+    .intro-card p b{color:var(--accent);font-weight:500}
+    .intro-badge{
+      display:inline-block;background:var(--soft);
+      border:1px solid var(--pink2);border-radius:20px;
+      font-size:.72rem;color:var(--accent);padding:.25rem .8rem;
+      margin-bottom:.65rem;font-weight:500;letter-spacing:.04em;
+    }
+
+    /* ── Section label ── */
+    .sec{
+      display:flex;align-items:center;gap:.5rem;
+      margin:0 0 .75rem;
+    }
+    .sec span{font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+    .sec::before,.sec::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* ── Links ── */
+    .links{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.5rem}
+    .link-btn{
+      display:flex;align-items:center;gap:.9rem;
+      background:var(--surface);
+      border:1.5px solid var(--border);
+      border-radius:16px;padding:.85rem 1.1rem;
+      text-decoration:none;color:var(--text);font-size:.88rem;font-weight:500;
+      transition:transform .18s,border-color .2s,box-shadow .2s;
+      box-shadow:0 2px 8px rgba(212,96,122,.05);
+      text-align:left;
+    }
+    .link-btn:hover{
+      transform:translateY(-2px);
+      border-color:var(--accent);
+      box-shadow:0 6px 18px rgba(212,96,122,.15);
+    }
+    .icon-wrap{
+      width:40px;height:40px;border-radius:12px;
+      background:var(--soft);
+      display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;font-size:1.15rem;
+    }
+    .link-text{flex:1}
+    .link-name{display:block;font-size:.88rem;font-weight:500;color:var(--text)}
+    .link-label{display:block;font-size:.73rem;color:var(--muted);font-weight:300;margin-top:.08rem}
+    .arrow{color:var(--accent2);font-size:.85rem;transition:transform .18s;flex-shrink:0}
+    .link-btn:hover .arrow{transform:translateX(3px)}
+
+    /* ── Telegram highlight ── */
+    .tg-section{
+      background:linear-gradient(135deg,#fff0f3,#fde8ed);
+      border:1.5px solid var(--pink2);
+      border-radius:20px;padding:1.2rem 1.2rem 1rem;
+      margin-bottom:1.5rem;
+      box-shadow:0 4px 16px rgba(212,96,122,.1);
+    }
+    .tg-top{display:flex;align-items:center;gap:.7rem;margin-bottom:.55rem}
+    .tg-icon{
+      width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(135deg,#f9a8c0,#d4607a);
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;flex-shrink:0;
+    }
+    .tg-info{text-align:left}
+    .tg-name{font-size:.95rem;font-weight:600;color:var(--accent)}
+    .tg-sub{font-size:.73rem;color:var(--muted)}
+    .tg-desc{
+      font-size:.8rem;color:var(--muted);line-height:1.65;
+      background:rgba(255,255,255,.6);border-radius:10px;
+      padding:.6rem .8rem;margin-bottom:.75rem;
+      border:1px solid rgba(212,96,122,.1);
+    }
+    .tg-desc b{color:var(--accent)}
+    .tg-btn{
+      display:flex;align-items:center;justify-content:center;gap:.5rem;
+      background:linear-gradient(135deg,#d4607a,#e8a0b0);
+      color:#fff;border-radius:12px;padding:.7rem 1rem;
+      text-decoration:none;font-size:.88rem;font-weight:500;
+      transition:transform .15s,box-shadow .15s;
+      box-shadow:0 4px 14px rgba(212,96,122,.3);
+    }
+    .tg-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,96,122,.4)}
+
+    /* ── Footer ── */
+    .footer{font-size:.72rem;color:var(--accent2);letter-spacing:.05em}
+
+    /* ── Animations ── */
+    .card{animation:fadeUp .5s ease both}
+    .intro-card{animation:fadeUp .5s .05s ease both}
+    .tg-section{animation:fadeUp .5s .1s ease both}
+    .link-btn:nth-child(1){animation:fadeUp .5s .15s ease both}
+    .link-btn:nth-child(2){animation:fadeUp .5s .2s ease both}
+    .link-btn:nth-child(3){animation:fadeUp .5s .25s ease both}
+    .link-btn:nth-child(4){animation:fadeUp .5s .3s ease both}
+    .link-btn:nth-child(5){animation:fadeUp .5s .35s ease both}
+    .link-btn:nth-child(6){animation:fadeUp .5s .4s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
   </style>
 </head>
 <body>
 <div class="card">
 
+  <!-- Avatar -->
   <div class="avatar-wrap">
+    <div class="avatar-ring"></div>
     <div class="avatar">
       <img src="pic.jpg" alt="Hely"
            onerror="this.parentElement.innerHTML='<div class=\'avatar-fallback\'>👩‍🏫</div>'"/>
     </div>
   </div>
-  <h1>Hely</h1>
-  <p class="handle">Talk Easy English</p>
-  <p class="bio">Learning · Reading · Growing</p>
-  <div class="divider"></div>
 
-  <div class="links">
-    <a class="link-btn telegram" href="https://t.me/talkenglisheasy" target="_blank" rel="noopener">
-      <div class="icon-wrap">✈️</div>
-      <div class="link-text"><span>Telegram</span><span class="link-label">Message me directly</span></div>
-      <span class="arrow">→</span>
-    </a>
-    <a class="link-btn readlang" href="https://readlang.com/" target="_blank" rel="noopener">
-      <div class="icon-wrap">📖</div>
-      <div class="link-text"><span>Readlang</span><span class="link-label">Read & learn vocabulary</span></div>
-      <span class="arrow">→</span>
-    </a>
-    <a class="link-btn grammar" href="https://www.elllo.org/book/index.html" target="_blank" rel="noopener">
-      <div class="icon-wrap">📚</div>
-      <div class="link-text"><span>Grammar Book</span><span class="link-label">elllo.org English lessons</span></div>
-      <span class="arrow">→</span>
-    </a>
-    <a class="link-btn reactor" href="https://www.languagereactor.com/" target="_blank" rel="noopener">
-      <div class="icon-wrap">🎬</div>
-      <div class="link-text"><span>Language Reactor</span><span class="link-label">Learn with movies & shows</span></div>
-      <span class="arrow">→</span>
+  <p class="name">Hely</p>
+  <p class="handle">🌸 Talk Easy English 🌸</p>
+
+  <!-- Intro -->
+  <div class="intro-card">
+    <div class="intro-badge">✨ أهم الروابط من الحساب</div>
+    <p>هنا تجدون <b>أفضل المواقع والأدوات</b> التي تم ذكرها في حساب Talk Easy English — كل ما تحتاجونه لتعلم الإنجليزي في مكان واحد! 🎀</p>
+  </div>
+
+  <!-- Telegram highlight -->
+  <div class="tg-section">
+    <div class="tg-top">
+      <div class="tg-icon">✈️</div>
+      <div class="tg-info">
+        <div class="tg-name">قناة التيليغرام</div>
+        <div class="tg-sub">@talkenglisheasy</div>
+      </div>
+    </div>
+    <div class="tg-desc">
+      لمزيد من المعلومات، الشرح، والمحتوى الحصري 🌸<br>
+      <b>تجدون كل شيء على قناة التيليغرام!</b>
+    </div>
+    <a class="tg-btn" href="https://t.me/talkenglisheasy" target="_blank" rel="noopener">
+      انضمي للقناة 🌷
     </a>
   </div>
 
-  <p class="footer">✦ hely · talk easy english ✦</p>
+  <!-- Resources -->
+  <div class="sec"><span>🎀 أدوات التعلم</span></div>
+  <div class="links">
+
+    <a class="link-btn" href="https://readlang.com/" target="_blank" rel="noopener">
+      <div class="icon-wrap">📖</div>
+      <div class="link-text">
+        <span class="link-name">Readlang</span>
+        <span class="link-label">اقرئي وتعلمي مفردات جديدة</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://www.elllo.org/book/index.html" target="_blank" rel="noopener">
+      <div class="icon-wrap">📚</div>
+      <div class="link-text">
+        <span class="link-name">Grammar Book</span>
+        <span class="link-label">كتاب قواعد اللغة الإنجليزية</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://www.languagereactor.com/" target="_blank" rel="noopener">
+      <div class="icon-wrap">🎬</div>
+      <div class="link-text">
+        <span class="link-name">Language Reactor</span>
+        <span class="link-label">تعلمي الإنجليزي من الأفلام والمسلسلات</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://www.youtube.com/@LearnEnglishWithTVSeries/videos" target="_blank" rel="noopener">
+      <div class="icon-wrap">▶️</div>
+      <div class="link-text">
+        <span class="link-name">Learn English With TV Series</span>
+        <span class="link-label">قناة يوتيوب رائعة للتعلم</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://www.listenaminute.com/" target="_blank" rel="noopener">
+      <div class="icon-wrap">🎧</div>
+      <div class="link-text">
+        <span class="link-name">Listen a Minute</span>
+        <span class="link-label">دروس استماع قصيرة ومفيدة</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="link-btn" href="https://forvo.com/search/weather/" target="_blank" rel="noopener">
+      <div class="icon-wrap">🔊</div>
+      <div class="link-text">
+        <span class="link-name">Forvo</span>
+        <span class="link-label">اسمعي النطق الصحيح للكلمات</span>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+  </div>
+
+  <p class="footer">🌸 made with love · talk easy english 🌸</p>
+
 </div>
 </body>
 </html>
