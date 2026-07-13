@@ -180,6 +180,14 @@
     /* ── Footer ── */
     .footer{text-align:center;font-size:.7rem;color:var(--accent2);letter-spacing:.05em;padding-top:.4rem}
 
+    /* ── Visit counter ── */
+    .visit-footer{text-align:center}
+    .visit-count{
+      margin-top:.5rem;font-size:.68rem;color:var(--accent2);
+      letter-spacing:.04em;opacity:.75;
+    }
+    .visit-dot{font-size:.65rem}
+    #visitNum{font-weight:500;color:var(--accent)}
     /* ── Animations ── */
     .card{animation:fadeUp .5s ease both}
     .intro-card{animation:fadeUp .5s .06s ease both}
@@ -318,8 +326,38 @@
     </p>
   </div>
 
-  <p class="footer">🌸 made with love · talk easy english · hely 🌸</p>
+  <div class="visit-footer">
+    <p class="footer">🌸 made with love · talk easy english · hely 🌸</p>
+    <p class="visit-count">
+      <span class="visit-dot">🌷</span>
+      <span id="visitNum">...</span> زيارة حتى الآن
+    </p>
+  </div>
 
 </div>
+<script>
+async function loadCount(){
+  try{
+    // hit the counter (increments on each visit)
+    const r = await fetch('https://api.counterapi.dev/v1/talkenglisheasy/visits/up');
+    const d = await r.json();
+    const n = d.count ?? d.value ?? '—';
+    // animate number
+    const el = document.getElementById('visitNum');
+    let start = Math.max(0, n - 30), end = n, dur = 1200;
+    let t0 = null;
+    function step(ts){
+      if(!t0) t0 = ts;
+      const prog = Math.min((ts-t0)/dur, 1);
+      el.textContent = Math.round(start + (end-start)*prog).toLocaleString();
+      if(prog < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  } catch(e){
+    document.getElementById('visitNum').textContent = '🌸';
+  }
+}
+window.addEventListener('load', loadCount);
+</script>
 </body>
 </html>
